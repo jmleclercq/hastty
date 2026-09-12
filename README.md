@@ -157,6 +157,8 @@ python tests/test_integration.py     # end-to-end test against a mock HA server
 python tests/capture_screenshots.py  # regenerate the SVG screenshots in assets/screenshots
 ```
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines before opening a PR.
+
 ## License
 
 [MIT](LICENSE)
