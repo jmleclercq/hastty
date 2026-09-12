@@ -1,0 +1,28 @@
+[project]
+name = "hastty"
+version = "0.1.0"
+description = "A terminal (TUI) viewer for your Home Assistant dashboards, with keyboard shortcuts to trigger commands."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "jmleclercq" }]
+requires-python = ">=3.10"
+dependencies = [
+    "textual>=0.58.0",
+    "aiohttp>=3.9",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/jmleclercq/hastty"
+Issues = "https://github.com/jmleclercq/hastty/issues"
+
+[project.scripts]
+hastty = "hastty.__main__:run"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["hastty*"]
