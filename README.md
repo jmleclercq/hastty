@@ -12,7 +12,7 @@ scene, trigger a script or an automation — all from the terminal, with live
 state updates.
 
 <p align="center">
-  <img src="assets/demo.gif" width="820" alt="hastty demo: navigating views, toggling a light and a switch, firing a custom shortcut, and the help screen">
+  <img src="assets/screenshots/01-view-living-room.svg" width="820" alt="hastty showing the Living Room view, mirrored from Lovelace">
 </p>
 
 ## Features
@@ -29,10 +29,6 @@ state updates.
   Token. No add-on, no extra integration to install on the HA side.
 
 ## Screenshots
-
-**Living Room view** — mirrored from the Lovelace dashboard, one row per entity:
-
-<img src="assets/screenshots/01-view-living-room.svg" width="820" alt="hastty showing the Living Room view, mirrored from Lovelace">
 
 **Activating an entity** — toggling `switch.tv` with <kbd>Enter</kbd>, state updates live:
 
@@ -159,10 +155,6 @@ keybindings:
 pip install -e .
 python tests/test_integration.py     # end-to-end test against a mock HA server
 python tests/capture_screenshots.py  # regenerate the SVG screenshots in assets/screenshots
-
-# regenerating assets/demo.gif needs two extra, non-runtime dependencies:
-pip install cairosvg pillow
-python tests/capture_demo_gif.py
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines before opening a PR.
