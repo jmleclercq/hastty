@@ -1,7 +1,7 @@
 # hastty
 
 [![PyPI](https://img.shields.io/pypi/v/hastty)](https://pypi.org/project/hastty/)
-[![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](LICENSE)
+[![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](https://github.com/jmleclercq/hastty/blob/main/LICENSE)
 
 **A terminal (TUI) viewer for your Home Assistant dashboards — with keyboard
 shortcuts to trigger commands, no browser required.**
@@ -12,7 +12,7 @@ scene, trigger a script or an automation — all from the terminal, with live
 state updates.
 
 <p align="center">
-  <img src="assets/screenshots/01-view-living-room.svg" width="820" alt="hastty showing the Living Room view, mirrored from Lovelace">
+  <img src="https://raw.githubusercontent.com/jmleclercq/hastty/main/assets/screenshots/01-view-living-room.svg" width="820" alt="hastty showing the Living Room view, mirrored from Lovelace">
 </p>
 
 ## Features
@@ -32,18 +32,18 @@ state updates.
 
 **Activating an entity** — toggling `switch.tv` with <kbd>Enter</kbd>, state updates live:
 
-<img src="assets/screenshots/02-activate-entity.svg" width="820" alt="Activating an entity: toggling switch.tv with Enter, live state update">
+<img src="https://raw.githubusercontent.com/jmleclercq/hastty/main/assets/screenshots/02-activate-entity.svg" width="820" alt="Activating an entity: toggling switch.tv with Enter, live state update">
 
 **Scenes view** — a second Lovelace dashboard, switched to with the <kbd>2</kbd> key:
 
-<img src="assets/screenshots/03-view-scenes.svg" width="820" alt="Scenes view, reached with the 2 key">
+<img src="https://raw.githubusercontent.com/jmleclercq/hastty/main/assets/screenshots/03-view-scenes.svg" width="820" alt="Scenes view, reached with the 2 key">
 
 **Help screen** — generic bindings plus the custom shortcuts from `config.yaml`:
 
-<img src="assets/screenshots/04-help.svg" width="820" alt="Help screen listing generic bindings and custom shortcuts">
+<img src="https://raw.githubusercontent.com/jmleclercq/hastty/main/assets/screenshots/04-help.svg" width="820" alt="Help screen listing generic bindings and custom shortcuts">
 
 *(Captured against a local mock Home Assistant server, see
-[`tests/mock_ha_server.py`](tests/mock_ha_server.py) — no real HA instance
+[`tests/mock_ha_server.py`](https://github.com/jmleclercq/hastty/blob/main/tests/mock_ha_server.py) — no real HA instance
 required to try it out.)*
 
 ## Installation
@@ -55,7 +55,7 @@ pip install hastty
 (or `pipx install hastty` to keep it isolated from other Python environments)
 
 To install from source instead — e.g. to contribute or track `main` — see
-[CONTRIBUTING.md](CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/jmleclercq/hastty/blob/main/CONTRIBUTING.md).
 
 ## Configuration
 
@@ -158,8 +158,8 @@ python tests/test_integration.py     # end-to-end test against a mock HA server
 python tests/capture_screenshots.py  # regenerate the SVG screenshots in assets/screenshots
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines before opening a PR.
+See [CONTRIBUTING.md](https://github.com/jmleclercq/hastty/blob/main/CONTRIBUTING.md) for guidelines before opening a PR.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/jmleclercq/hastty/blob/main/LICENSE)

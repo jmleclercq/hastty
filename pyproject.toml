@@ -1,6 +1,6 @@
 [project]
 name = "hastty"
-version = "0.1.1"
+version = "0.1.2"
 description = "A terminal (TUI) viewer for your Home Assistant dashboards, with keyboard shortcuts to trigger commands."
 readme = "README.md"
 license = { text = "MIT" }
