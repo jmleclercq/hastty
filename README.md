@@ -12,7 +12,7 @@ scene, trigger a script or an automation — all from the terminal, with live
 state updates.
 
 <p align="center">
-  <img src="assets/screenshots/01-view-living-room.svg" width="720" alt="hastty showing the Living Room view, mirrored from Lovelace">
+  <img src="assets/screenshots/01-view-living-room.svg" width="820" alt="hastty showing the Living Room view, mirrored from Lovelace">
 </p>
 
 ## Features
@@ -30,13 +30,17 @@ state updates.
 
 ## Screenshots
 
-| Living Room view | Activating an entity |
-|---|---|
-| ![Living Room view](assets/screenshots/01-view-living-room.svg) | ![Activating an entity](assets/screenshots/02-activate-entity.svg) |
+**Activating an entity** — toggling `switch.tv` with <kbd>Enter</kbd>, state updates live:
 
-| Scenes view | Help / shortcuts |
-|---|---|
-| ![Scenes view](assets/screenshots/03-view-scenes.svg) | ![Help screen](assets/screenshots/04-help.svg) |
+<img src="assets/screenshots/02-activate-entity.svg" width="820" alt="Activating an entity: toggling switch.tv with Enter, live state update">
+
+**Scenes view** — a second Lovelace dashboard, switched to with the <kbd>2</kbd> key:
+
+<img src="assets/screenshots/03-view-scenes.svg" width="820" alt="Scenes view, reached with the 2 key">
+
+**Help screen** — generic bindings plus the custom shortcuts from `config.yaml`:
+
+<img src="assets/screenshots/04-help.svg" width="820" alt="Help screen listing generic bindings and custom shortcuts">
 
 *(Captured against a local mock Home Assistant server, see
 [`tests/mock_ha_server.py`](tests/mock_ha_server.py) — no real HA instance
