@@ -11,7 +11,7 @@ STATES = [
     {"entity_id": "light.living_room", "state": "off", "attributes": {"friendly_name": "Living Room Light"}},
     {"entity_id": "switch.tv", "state": "on", "attributes": {"friendly_name": "TV"}},
     {"entity_id": "sensor.living_room_temp", "state": "21.5", "attributes": {"friendly_name": "Living Room Temp.", "unit_of_measurement": "°C"}},
-    {"entity_id": "scene.good_night", "state": "scening", "attributes": {"friendly_name": "Good Night"}},
+    {"entity_id": "scene.good_night", "state": "off", "attributes": {"friendly_name": "Good Night"}},
     {"entity_id": "light.garden", "state": "off", "attributes": {"friendly_name": "Garden Light"}},
 ]
 
