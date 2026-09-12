@@ -140,10 +140,19 @@ class HasttyApp(App):
         states_list = await self.client.get_states()
         self.states = {s["entity_id"]: s for s in states_list}
 
-        lovelace_cfg = await self.client.get_lovelace_config()
-        self.views = views_from_lovelace_config(lovelace_cfg)
+        self.views = []
+        try:
+            lovelace_cfg = await self.client.get_lovelace_config()
+            self.views = views_from_lovelace_config(lovelace_cfg)
+        except RuntimeError as exc:
+            # Some setups have no "default" dashboard at all (every dashboard
+            # was replaced by a custom one) — HA then answers "config_not_found"
+            # for the no-url_path request instead of an empty config. Don't
+            # crash the whole app on startup for that; fall back to whatever
+            # dashboards do exist (see below) instead of showing nothing.
+            log.warning("No default Lovelace dashboard (%s)", exc)
 
-        if self.config_.include_extra_dashboards:
+        if self.config_.include_extra_dashboards or not self.views:
             extra_dashboards = await self.client.list_lovelace_dashboards()
             for dash in extra_dashboards:
                 url_path = dash.get("url_path")

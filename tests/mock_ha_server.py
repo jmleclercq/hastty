@@ -50,6 +50,14 @@ LOVELACE_CONFIG = {
 
 CALLED_SERVICES: list[dict] = []
 
+# Some real HA setups have no "default" (no url_path) dashboard at all —
+# every dashboard was replaced by a custom one. Toggle this to simulate that:
+# lovelace/config with no url_path then answers config_not_found, like real
+# HA does, instead of falling back to LOVELACE_CONFIG.
+SIMULATE_NO_DEFAULT_DASHBOARD = False
+EXTRA_DASHBOARDS: list[dict] = []
+EXTRA_DASHBOARD_CONFIGS: dict[str, dict] = {}
+
 
 async def ws_handler(request: web.Request) -> web.WebSocketResponse:
     ws = web.WebSocketResponse()
@@ -73,9 +81,22 @@ async def ws_handler(request: web.Request) -> web.WebSocketResponse:
         if mtype == "get_states":
             await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": STATES})
         elif mtype == "lovelace/config":
-            await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": LOVELACE_CONFIG})
+            url_path = data.get("url_path")
+            if url_path is None and SIMULATE_NO_DEFAULT_DASHBOARD:
+                await ws.send_json(
+                    {
+                        "id": msg_id,
+                        "type": "result",
+                        "success": False,
+                        "error": {"code": "config_not_found", "message": "No config found."},
+                    }
+                )
+            elif url_path and url_path in EXTRA_DASHBOARD_CONFIGS:
+                await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": EXTRA_DASHBOARD_CONFIGS[url_path]})
+            else:
+                await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": LOVELACE_CONFIG})
         elif mtype == "lovelace/dashboards/list":
-            await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": []})
+            await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": EXTRA_DASHBOARDS})
         elif mtype == "subscribe_events":
             await ws.send_json({"id": msg_id, "type": "result", "success": True, "result": None})
         elif mtype == "call_service":
