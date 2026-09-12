@@ -1,5 +1,8 @@
 # hastty
 
+[![Version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/jmleclercq/hastty/releases)
+[![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](LICENSE)
+
 **A terminal (TUI) viewer for your Home Assistant dashboards — with keyboard
 shortcuts to trigger commands, no browser required.**
 
