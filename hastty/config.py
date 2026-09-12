@@ -31,6 +31,7 @@ class AppConfig:
     token: str
     verify_ssl: bool = True
     refresh_interval: float = 0.0  # 0 = no polling, relies on WS events
+    include_extra_dashboards: bool = False
     shortcuts: list[Shortcut] = field(default_factory=list)
 
 
@@ -65,6 +66,7 @@ def load_config(path: Optional[Path] = None) -> AppConfig:
         )
 
     verify_ssl = bool(ha_cfg.get("verify_ssl", True))
+    include_extra_dashboards = bool(ha_cfg.get("include_extra_dashboards", False))
 
     shortcuts = []
     for item in raw.get("keybindings", []) or []:
@@ -84,6 +86,7 @@ def load_config(path: Optional[Path] = None) -> AppConfig:
         base_url=base_url,
         token=token,
         verify_ssl=verify_ssl,
+        include_extra_dashboards=include_extra_dashboards,
         shortcuts=shortcuts,
     )
 
@@ -102,6 +105,9 @@ homeassistant:
   url: "http://homeassistant.local:8123"
   token: ""          # Long-Lived Access Token (HA profile > Security)
   verify_ssl: true
+  # If you have more than one Lovelace dashboard and want hastty to mirror
+  # all of them (not just your default one), set this to true.
+  include_extra_dashboards: false
 
 # Global keyboard shortcuts: available from any view, to trigger a command
 # directly (scene, script, automation...) without navigating to the entity

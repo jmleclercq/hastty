@@ -58,8 +58,14 @@ def views_from_lovelace_config(config: dict) -> list[ViewDef]:
         title = view.get("title") or view.get("path") or f"View {idx + 1}"
         path = view.get("path") or str(idx)
         entity_ids: list[str] = []
-        for card in view.get("cards", []):
+        for card in view.get("cards", []) or []:
             _extract_from_card(card, entity_ids)
+        # Modern "sections" views (the default dashboard editor since HA
+        # 2024.9) don't put cards directly under the view: each section is
+        # its own container with its own "cards" list.
+        for section in view.get("sections", []) or []:
+            for card in section.get("cards", []) or []:
+                _extract_from_card(card, entity_ids)
         # de-duplicate while preserving order
         seen = set()
         deduped = []

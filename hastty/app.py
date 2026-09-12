@@ -143,18 +143,19 @@ class HasttyApp(App):
         lovelace_cfg = await self.client.get_lovelace_config()
         self.views = views_from_lovelace_config(lovelace_cfg)
 
-        extra_dashboards = await self.client.list_lovelace_dashboards()
-        for dash in extra_dashboards:
-            url_path = dash.get("url_path")
-            if not url_path:
-                continue
-            try:
-                cfg = await self.client.get_lovelace_config(url_path)
-            except RuntimeError:
-                continue
-            for v in views_from_lovelace_config(cfg):
-                v.title = f"{dash.get('title', url_path)} / {v.title}"
-                self.views.append(v)
+        if self.config_.include_extra_dashboards:
+            extra_dashboards = await self.client.list_lovelace_dashboards()
+            for dash in extra_dashboards:
+                url_path = dash.get("url_path")
+                if not url_path:
+                    continue
+                try:
+                    cfg = await self.client.get_lovelace_config(url_path)
+                except RuntimeError:
+                    continue
+                for v in views_from_lovelace_config(cfg):
+                    v.title = f"{dash.get('title', url_path)} / {v.title}"
+                    self.views.append(v)
 
         self._render_views()
         self.sub_title = f"{self.config_.base_url} — {len(self.views)} view(s), {len(self.states)} entities"
@@ -176,8 +177,11 @@ class HasttyApp(App):
                 state = self.states.get(eid)
                 friendly = (state.get("attributes", {}).get("friendly_name") if state else None) or eid
                 display_state = _format_state(state) if state else "unavailable"
-                row_key = table.add_row(_icon_for(eid), friendly, display_state, key=eid)
-                self._entity_locations.setdefault(eid, []).append((table_id, str(row_key)))
+                table.add_row(_icon_for(eid), friendly, display_state, key=eid)
+                # DataTable's RowKey has no meaningful __str__ (its default repr
+                # includes a memory address), so we must keep the entity_id
+                # itself as the lookup key, not str(row_key).
+                self._entity_locations.setdefault(eid, []).append((table_id, eid))
             pane = TabPane(view.title or f"View {i + 1}", table, id=f"pane-{i}")
             tabs.add_pane(pane)
 
@@ -220,9 +224,12 @@ class HasttyApp(App):
             table = active_pane.query_one(DataTable)
         except Exception:  # noqa: BLE001
             return
-        if table.cursor_row is None:
+        if table.row_count == 0 or table.cursor_row is None:
             return
-        row_key = table.coordinate_to_cell_key(table.cursor_coordinate).row_key
+        try:
+            row_key = table.coordinate_to_cell_key(table.cursor_coordinate).row_key
+        except Exception:  # noqa: BLE001
+            return
         entity_id = row_key.value if row_key is not None else None
         if not entity_id:
             return

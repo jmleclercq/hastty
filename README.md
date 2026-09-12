@@ -79,6 +79,10 @@ hastty --init-config
 The token can stay in `.env` (recommended, never committed) even if you use
 the YAML file for shortcuts.
 
+By default, only your **default** Lovelace dashboard is mirrored. If you use
+several dashboards and want all of them, set `include_extra_dashboards: true`
+under `homeassistant:` in `config.yaml`.
+
 ## Run
 
 ```bash
@@ -122,12 +126,15 @@ keybindings:
 
 - **Connection**: Home Assistant WebSocket API (`/api/websocket`),
   authenticated with a Long-Lived Access Token (`hastty/client.py`).
-- **Dashboard mirroring**: calls `lovelace/config` (default dashboard) plus
-  `lovelace/dashboards/list` then `lovelace/config` per `url_path` for
-  additional dashboards. Cards (`entities`, `glance`, `light`,
-  `vertical-stack`, `grid`, etc.) are flattened into per-view lists of
-  `entity_id` (`hastty/lovelace.py`) — the app doesn't try to reproduce the
-  visual layout of the cards, only the view → entities organization.
+- **Dashboard mirroring**: calls `lovelace/config` for your default
+  dashboard (and, if `include_extra_dashboards` is enabled, every dashboard
+  from `lovelace/dashboards/list` too). Cards (`entities`, `glance`, `light`,
+  `vertical-stack`, `grid`, etc.) — whether under a classic top-level
+  `cards` list or under the newer per-section `sections` layout used by the
+  default dashboard editor since Home Assistant 2024.9 — are flattened into
+  per-view lists of `entity_id` (`hastty/lovelace.py`). The app doesn't try
+  to reproduce the visual layout of the cards, only the view → entities
+  organization.
 - **Commands**: `call_service` over WebSocket, either through the generic
   per-domain action (Enter/Space on a selected entity) or through custom
   shortcuts (`keybindings` in the config).
