@@ -1,6 +1,6 @@
 # hastty
 
-[![Version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/jmleclercq/hastty/releases)
+[![Version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/jmleclercq/hastty/releases/tag/v0.1.1)
 [![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](LICENSE)
 
 **A terminal (TUI) viewer for your Home Assistant dashboards — with keyboard
