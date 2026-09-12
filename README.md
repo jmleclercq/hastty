@@ -1,6 +1,6 @@
 # hastty
 
-[![Version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/jmleclercq/hastty/releases/tag/v0.1.1)
+[![PyPI](https://img.shields.io/pypi/v/hastty)](https://pypi.org/project/hastty/)
 [![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](LICENSE)
 
 **A terminal (TUI) viewer for your Home Assistant dashboards — with keyboard
@@ -49,12 +49,13 @@ required to try it out.)*
 ## Installation
 
 ```bash
-git clone https://github.com/jmleclercq/hastty.git
-cd hastty
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .
+pip install hastty
 ```
+
+(or `pipx install hastty` to keep it isolated from other Python environments)
+
+To install from source instead — e.g. to contribute or track `main` — see
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Configuration
 
