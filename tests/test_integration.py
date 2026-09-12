@@ -89,6 +89,19 @@ async def main() -> None:
             assert len(app.screen_stack) == 1, "app crashed to the default error screen"
             print("OK: Enter on an empty view doesn't crash the app")
 
+            # Regression: refreshing (r) used to crash with DuplicateIds —
+            # TabbedContent.clear_panes() only schedules removal, so re-adding
+            # panes with the same ids right after raced the old ones being
+            # torn down, unless awaited.
+            await pilot.press("1")
+            await asyncio.sleep(0.2)
+            await pilot.press("r")
+            await asyncio.sleep(0.4)
+            assert len(app.screen_stack) == 1, "refresh (r) crashed the app"
+            assert len(app.views) == 4, f"expected 4 views after refresh, got {len(app.views)}"
+            assert app.views[0].entity_ids == ["light.living_room", "switch.tv", "sensor.living_room_temp"]
+            print("OK: refresh (r) doesn't crash the app")
+
         print("\nALL INTEGRATION TESTS PASSED")
     finally:
         await runner.cleanup()

@@ -157,12 +157,16 @@ class HasttyApp(App):
                     v.title = f"{dash.get('title', url_path)} / {v.title}"
                     self.views.append(v)
 
-        self._render_views()
+        await self._render_views()
         self.sub_title = f"{self.config_.base_url} — {len(self.views)} view(s), {len(self.states)} entities"
 
-    def _render_views(self) -> None:
+    async def _render_views(self) -> None:
         tabs = self.query_one("#tabs", TabbedContent)
-        tabs.clear_panes()
+        # clear_panes() only schedules removal (returns an AwaitComplete); the
+        # old ContentTab widgets aren't actually gone until this is awaited.
+        # Without it, re-adding a pane with the same id right after (e.g. on
+        # "r" refresh) races the teardown and Textual raises DuplicateIds.
+        await tabs.clear_panes()
         self._entity_locations.clear()
 
         if not self.views:
