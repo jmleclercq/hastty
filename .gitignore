@@ -5,3 +5,5 @@ __pycache__/
 .venv/
 config.yaml
 *.egg-info/
+dist/
+build/
