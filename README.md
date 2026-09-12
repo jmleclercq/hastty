@@ -1,6 +1,6 @@
 # hastty
 
-[![PyPI](https://img.shields.io/pypi/v/hastty?cacheSeconds=3600&v=0.1.3)](https://pypi.org/project/hastty/)
+[![PyPI](https://img.shields.io/pypi/v/hastty?cacheSeconds=3600&v=0.1.4)](https://pypi.org/project/hastty/)
 [![License: MIT](https://img.shields.io/github/license/jmleclercq/hastty)](https://github.com/jmleclercq/hastty/blob/main/LICENSE)
 
 **A terminal (TUI) viewer for your Home Assistant dashboards — with keyboard
