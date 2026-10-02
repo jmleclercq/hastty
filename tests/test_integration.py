@@ -45,6 +45,17 @@ async def main() -> None:
             assert app.views[3].entity_ids == []
             print("OK: view with no entities is handled gracefully")
 
+            # Regression (issue #2): up/down and j/k must move the selection
+            # right after startup, without first clicking/tabbing into the
+            # table — focus starts on the tab bar, which ignores up/down.
+            table = app.query_one("#table-0", DataTable)
+            assert table.cursor_row == 0
+            for key, expected_row in [("down", 1), ("j", 2), ("k", 1), ("up", 0)]:
+                await pilot.press(key)
+                await pilot.pause()
+                assert table.cursor_row == expected_row, f"'{key}' -> row {table.cursor_row}, expected {expected_row}"
+            print("OK: up/down and j/k move the selection from startup focus")
+
             # Select the 1st row (light.living_room, off) and activate it (Enter)
             await pilot.press("enter")
             await asyncio.sleep(0.3)

@@ -99,6 +99,12 @@ class HasttyApp(App):
         Binding("question_mark", "show_help", "Help"),
         Binding("r", "refresh", "Refresh"),
         Binding("enter,space", "activate_selected", "Activate"),
+        # Not left to DataTable's own up/down bindings: those only fire when
+        # the table has focus, and on startup focus sits on the tab bar
+        # (ContentTabs), which handles left/right but lets up/down through.
+        # j/k aren't bound by DataTable at all.
+        Binding("down,j", "cursor_down", "Down", show=False),
+        Binding("up,k", "cursor_up", "Up", show=False),
     ]
 
     def __init__(self, config: AppConfig) -> None:
@@ -230,12 +236,26 @@ class HasttyApp(App):
     def action_refresh(self) -> None:
         self.run_worker(self._load_dashboard(), exclusive=True)
 
-    def action_activate_selected(self) -> None:
+    def _active_table(self) -> Optional[DataTable]:
         try:
             tabs = self.query_one("#tabs", TabbedContent)
-            active_pane = tabs.get_pane(tabs.active)
-            table = active_pane.query_one(DataTable)
+            return tabs.get_pane(tabs.active).query_one(DataTable)
         except Exception:  # noqa: BLE001
+            return None
+
+    def action_cursor_down(self) -> None:
+        table = self._active_table()
+        if table is not None:
+            table.action_cursor_down()
+
+    def action_cursor_up(self) -> None:
+        table = self._active_table()
+        if table is not None:
+            table.action_cursor_up()
+
+    def action_activate_selected(self) -> None:
+        table = self._active_table()
+        if table is None:
             return
         if table.row_count == 0 or table.cursor_row is None:
             return
